@@ -84,8 +84,7 @@ def begin_comparisons(ratings, movies):
 
         print(f"\nWhich movie do you prefer?\n"
               f"  1) {movie_a} (rating: {ratings[movie_a]})\n"
-              f"  2) {movie_b} (rating: {ratings[movie_b]})\n"
-              f"  t) Tie")
+              f"  2) {movie_b} (rating: {ratings[movie_b]})")
         choice = input("Choose 1, 2, 't' for tie, or 'q' to stop: ").strip().lower()
 
         if choice == 'q':
@@ -213,8 +212,9 @@ def main():
             print_current_list(ratings)
 
         elif choice == 'q':
-            save_choice = input("Do you want to save your current rankings to JSON? (y/n): ").strip().lower()
-            if save_choice == 'y':
+            # Make "y" the default if user presses Enter
+            save_choice = input("Do you want to save your current rankings to JSON? ([y]/n): ").strip().lower()
+            if not save_choice or save_choice == 'y':  # Empty input or 'y' means yes
                 json_file = input(f"Enter JSON filename to save [{JSON_FILE}]: ").strip()
                 if not json_file:
                     json_file = JSON_FILE
