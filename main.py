@@ -77,20 +77,20 @@ def begin_comparisons(ratings, movies):
         print("No movies loaded. Please load from text or JSON first.")
         return
 
-    print("\nBeginning pairwise comparisons. Type 'q' to exit this mode.")
+    print("\nBeginning pairwise comparisons. Type 'q' to exit this mode, or 't' for a tie.")
     while True:
         # pick two distinct random movies
         movie_a, movie_b = random.sample(movies, 2)
 
         print(f"\nWhich movie do you prefer?\n"
               f"  1) {movie_a} (rating: {ratings[movie_a]})\n"
-              f"  2) {movie_b} (rating: {ratings[movie_b]})")
-        choice = input("Choose 1 or 2 (or 'q' to stop): ").strip().lower()
+              f"  2) {movie_b} (rating: {ratings[movie_b]})\n"
+              f"  t) Tie")
+        choice = input("Choose 1, 2, 't' for tie, or 'q' to stop: ").strip().lower()
 
         if choice == 'q':
             break
         elif choice == '1':
-            # movie_a wins, movie_b loses
             new_a = update_elo(ratings[movie_a], ratings[movie_b], 1.0)
             new_b = update_elo(ratings[movie_b], ratings[movie_a], 0.0)
             ratings[movie_a] = round(new_a)
@@ -98,15 +98,22 @@ def begin_comparisons(ratings, movies):
             print(f"You chose '{movie_a}'. Elo updated!")
             print(f"New rating for {movie_a}: {ratings[movie_a]}, {movie_b}: {ratings[movie_b]}")
         elif choice == '2':
-            # movie_b wins, movie_a loses
             new_b = update_elo(ratings[movie_b], ratings[movie_a], 1.0)
             new_a = update_elo(ratings[movie_a], ratings[movie_b], 0.0)
             ratings[movie_b] = round(new_b)
             ratings[movie_a] = round(new_a)
             print(f"You chose '{movie_b}'. Elo updated!")
             print(f"New rating for {movie_b}: {ratings[movie_b]}, {movie_a}: {ratings[movie_a]}")
+        elif choice == 't':
+            # declare a tie
+            new_a = update_elo(ratings[movie_a], ratings[movie_b], 0.5)
+            new_b = update_elo(ratings[movie_b], ratings[movie_a], 0.5)
+            ratings[movie_a] = round(new_a)
+            ratings[movie_b] = round(new_b)
+            print(f"You declared a tie between '{movie_a}' and '{movie_b}'. Elo updated!")
+            print(f"New rating for {movie_a}: {ratings[movie_a]}, {movie_b}: {ratings[movie_b]}")
         else:
-            print("Invalid input. Type '1', '2', or 'q'.")
+            print("Invalid input. Type '1', '2', 't', or 'q'.")
 
 def print_current_list(ratings):
     """
