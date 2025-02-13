@@ -206,7 +206,13 @@ def main():
             print_current_list(ratings)
 
         elif choice == 'q':
-            # Quit
+            save_choice = input("Do you want to save your current rankings to JSON? (y/n): ").strip().lower()
+            if save_choice == 'y':
+                json_file = input(f"Enter JSON filename to save [{JSON_FILE}]: ").strip()
+                if not json_file:
+                    json_file = JSON_FILE
+                save_ratings_to_json(ratings, json_file)
+                print(f"Ratings saved to {json_file}.")
             print("Goodbye!")
             break
 
