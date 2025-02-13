@@ -96,6 +96,7 @@ def begin_comparisons(ratings, movies):
             ratings[movie_a] = round(new_a)
             ratings[movie_b] = round(new_b)
             print(f"You chose '{movie_a}'. Elo updated!")
+            print(f"New rating for {movie_a}: {ratings[movie_a]}, {movie_b}: {ratings[movie_b]}")
         elif choice == '2':
             # movie_b wins, movie_a loses
             new_b = update_elo(ratings[movie_b], ratings[movie_a], 1.0)
@@ -103,6 +104,7 @@ def begin_comparisons(ratings, movies):
             ratings[movie_b] = round(new_b)
             ratings[movie_a] = round(new_a)
             print(f"You chose '{movie_b}'. Elo updated!")
+            print(f"New rating for {movie_b}: {ratings[movie_b]}, {movie_a}: {ratings[movie_a]}")
         else:
             print("Invalid input. Type '1', '2', or 'q'.")
 
